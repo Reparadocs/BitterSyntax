@@ -1,5 +1,5 @@
 GEM
-  remote: https://rubygems.org/
+  remote: http://rubygems.org/
   specs:
     RedCloth (4.2.9)
     blankslate (2.1.2.4)
@@ -12,6 +12,8 @@ GEM
       execjs
     coffee-script-source (1.9.0)
     colorator (0.1)
+    daemons (1.1.9)
+    eventmachine (1.0.7)
     execjs (2.3.0)
     fast-stemmer (1.0.2)
     ffi (1.9.6)
@@ -61,6 +63,10 @@ GEM
     redcarpet (3.2.2)
     safe_yaml (1.0.4)
     sass (3.4.12)
+    thin (1.6.3)
+      daemons (~> 1.0, >= 1.0.9)
+      eventmachine (~> 1.0)
+      rack (~> 1.0)
     timers (4.0.1)
       hitimes
     toml (0.1.2)
@@ -74,3 +80,4 @@ DEPENDENCIES
   RedCloth
   jekyll
   rack-contrib
+  thin
