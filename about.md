@@ -4,4 +4,4 @@ title: About
 permalink: /about/
 ---
 
-Just a (hopefully) useful blog about programming :)
+Hi! My name's Rishab Hegde, this is a programming blog, and I'm currently writing about Rex, an interpreted programming language I'm attempting to create! Contact me at rishab@bittersyntax.com

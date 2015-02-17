@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Welcome to Rex!"
+title:  "Ch 0: Welcome to Rex!"
 date:   2015-02-14 18:03:36
 categories: rex
 ---
@@ -23,7 +23,7 @@ public class Tutorial
 }
 {% endhighlight %} 
 
-And explain exactly what it's doing, what we're trying to accomplish, etc. I strongly encourage you attempt to "code along" instead of just using copy and paste, as that will definitely help you understand what's going on. Hopefully if you go through all the chapters in order and start with a basic knowledge of Java you should not feel lost at any point. However, if you do become lost (or have any other questions, comments, etc.) please e-mail me (rishab@bittersyntax.com) and I'll do my best to help you out!
+And explain exactly what it's doing, what we're trying to accomplish, etc. I strongly encourage you attempt to "code along" instead of just using copy and paste, as that will definitely help you understand what's going on. Hopefully if you go through all the chapters in order and start with a basic knowledge of Java you should not feel lost at any point. However, if you do become lost (or have any other questions, comments, etc.) please e-mail me (rex@bittersyntax.com) and I'll do my best to help you out!
 
 At the beginning of each chapter, there will also be a github link to the code that is up to date till the beginning of that chapter. In case you are curious, you can check out my current progress on Rex (the language we'll be creating) [here][github-rex]. 
 
@@ -43,9 +43,9 @@ If you're not already familiar with the concept of interpreted vs compiled langu
 We're going to write the interpreter in java without any external libraries, frameworks, etc. so really all you need is the [Java Development Kit][jdk], a text editor of some kind, and the terminal. I'm using a Mac and Sublime Text/Vim, so for those of you opting to use Windows and/or an IDE of some sort, feel free to do so, but know that if anything goes wrong due to those tools I will probably unable to provide meaningful support (although I can try!). I will be writing this assuming you understand basic Java concepts (OOP, Inheritance, etc.) and Programming concepts (Stacks, Lists, etc.).
 
 ### Disclaimer
-I'm not some sort of wizard at programming. At the time of this writing, I'm still completing my undergraduate degree so the language will probably end up being horribly inefficient and I may be making horrible design decisions along the way. Hopefully, this will still serve as a great learning experience. I'm writing this tutorial because I haven't seen a comprehensive one that only assumes the reader just has a knowledge of Java. If I do make a horrible mistake, feel free to contact me (rishab@bittersyntax.com)
+I'm not some sort of wizard at programming. At the time of this writing, I'm still completing my undergraduate degree so the language will probably end up being horribly inefficient and I may be making horrible design decisions along the way. Hopefully, this will still serve as a great learning experience. I'm writing this tutorial because I haven't seen a comprehensive one that only assumes the reader just has a knowledge of Java. If I do make a horrible mistake, feel free to contact me (rex@bittersyntax.com)
 
-# Next Chapter: (Not Posted Yet)
+# Next Chapter: [Overview of an Interpreter][ch1]
 
 [twitter]:     http://twitter.com/reparadocs
 [rss]:         http://bittersyntax.com/feed.xml
@@ -56,3 +56,4 @@ I'm not some sort of wizard at programming. At the time of this writing, I'm sti
 [llvm]:        http://llvm.org/
 [jdk]:         http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
 [github-rex]:  https://github.com/Reparadocs/Rex
+[ch1]:         /rex/2015/02/15/rex/ch1
