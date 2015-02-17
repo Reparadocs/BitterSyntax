@@ -4,7 +4,7 @@ title: Bitter Syntax
 email: rishab@bittersyntax.com
 description: > # this means to ignore newlines until "baseurl:"
    A blog about programming, technology, and other stuff
-baseurl: "" # the subpath of your site, e.g. /blog/
+baseurl: "/" # the subpath of your site, e.g. /blog/
 url: "http://bittersyntax.com" # the base hostname & protocol for your site
 twitter_username: reparadocs
 github_username:  reparadocs
