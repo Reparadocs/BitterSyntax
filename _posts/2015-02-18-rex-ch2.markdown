@@ -1,0 +1,207 @@
+---
+layout: post
+title:  "Ch 2: Creating a Basic Parser"
+date:   2015-02-18 17:03:36
+categories: rex
+---
+
+In this chapter, we'll be creating the first part of the interpreter: The Lexer. Or at least a basic version of it. For now, we're going to focus on getting our interpreter to run basic mathematical operations. Rest assured, we will eventually improve our interpreter to take in variables, functions, etc. but we'll start from the basics and work our way up. 
+
+### Introduction To Tokens
+
+So the first step we will take is to decide exactly which tokens we will look for. If we encounter a string of characters that doesn't match any of the tokens we're looking for, then we'll throw an error. If this is a little confusing, keep reading, it'll become clearer. Since we're starting with basic math, we will probably need to look for integers, some operators(+,-,\*,/,%), and let's also look for parantheses so we can get a more thorough understanding about how the order of operations works in an interpreter. We will also add a way for the interpreter to know that we're done with the current expression by adding an end token (;). Now that we know what we're looking for, we need a way to find it. Here's where regular expressions, or *regex* comes in. If you haven't heard about regex before, don't fret. It is a way to do pattern-matching on Strings. As we go along, I will explain some of the expressions we'll be using but [this stack overflow post][so-regex] is essential to have a full understanding of what we're doing. Java has excellent regex support, so we can use that to easily match Strings to regex patterns.
+
+### Using Regex
+
+So for each of our tokens, we now need to create a regular expression so that our interpreter can figure out which token the next sequence of characters is.
+
+Integer - <code>[0-9]+</code> The square brackets is a character class, meaning it matches exactly one of the characters enclosed, which in this case are the characters 0,1,2...,9. The + afterwards means "one or more", so all this regular expression does is look for one or more digits grouped together.
+
+The rest are fairly easy:
+
+Left Parentheses - <code>\\(</code> We need the beginning \\ to escape the parentheses or regex might think we're trying to create a group
+
+Right Parentheses - <code>\\)</code>
+
+Multiply Operator - <code>\\*</code> Similarly, the * in regex means "0 or more" so we need to escape it
+
+Divide Operator - <code>/</code> No need to escape anything here since / holds no special meaning in regex
+
+Modulus Operator - <code>%</code>
+
+Add Operator - <code>//+</code> As mentioned earlier, + means "one or more" so we need to escape it
+
+Subtract Operator - <code>//-</code>
+
+End - <code>;</code>
+
+As you can see, Regex makes a lot of sense. If we encounter "123", Regex can match that with our Integer token, if we encounter "-", Regex can match that with our Subtract Operator token, etc.
+
+### Creating the Token Types
+
+But how do we actually put this in use? How can we map a regex string to a token type? We use a map! A map is made up of key, value pairs, and in this case it would be most logical to use the regex patterns as the key, and the token type as the value. There's only one problem: How do we represent the token type? We'll use an enum for that. So go ahead and create an enum called RexTokenType that includes all the token types we just covered and then compare it with mine:
+
+<b><a> Show Code </a></b>
+{: .showHide target="1"}
+
+<div class="targetDiv" id="div1">
+{% highlight java %}
+public enum RexTokenType
+{
+   INTEGER,
+   END,
+   NONE,
+   L_PAREN
+   R_PAREN
+   MLT_OPERATOR
+   DIV_OPERATOR
+   MOD_OPERATOR
+   ADD_OPERATOR
+   SUB_OPERATOR
+}
+{% endhighlight %}
+</div>
+
+Feel free to name your Token Types whatever you want, just keep in mind that my code samples will be using the above names. You may have noticed that there is one extra token type in my sample: NONE. This is there in case we find a sequence of characters that can be matched with no regular expression. 
+
+### Creating the Lexer Dictionary
+
+The next step is creating the map. We should to create another class, RexLexerDict, to hold this, and it will also handle our matching for us. All you need to do is create a map, add all the key-value pairs of regex patterns and Token Types. You should also add a function that takes in a String and returns a Token Type using that map! To help you with this, I suggest you take a look at [Java's regex support][java-regex], especially the [Pattern][java-pattern] and [Matcher][java-matcher] classes. Once you've created that class, you can take a look at what I did:
+
+<b><a> Show Code </a></b>
+{: .showHide target="2"}
+
+<div class="targetDiv" id="div2">
+{% highlight java %}
+import java.util.regex.Pattern;
+import java.util.HashMap;
+
+public class RexLexerDict
+{
+   private HashMap<Pattern, RexTokenType> tokenMap;
+
+   public RexLexerDict()
+   {
+      tokenMap = new HashMap<Pattern, RexTokenType>();
+      createDict();
+   }
+
+   private void createDict()
+   {
+      addToken("[0-9]+", RexTokenType.INTEGER);
+      addToken(";", RexTokenType.END);
+
+      addToken("\\(", RexTokenType.L_PAREN);
+      addToken("\\)", RexTokenType.R_PAREN);
+      addToken("\\*", RexTokenType.MLT_OPERATOR);
+      addToken("/", RexTokenType.DIV_OPERATOR);
+      addToken("%", RexTokenType.MOD_OPERATOR);
+      addToken("\\+", RexTokenType.ADD_OPERATOR);
+      addToken("\\-", RexTokenType.SUB_OPERATOR);
+   }
+
+   private void addToken(String regex, RexTokenType tokenType)
+   {
+      tokenMap.put(Pattern.compile("^" + regex + "$"), tokenType);
+   }
+
+   public RexTokenType match(String token)
+   {
+      for(Pattern pattern : tokenMap.keySet())
+      {
+         if(pattern.matcher(token).find())
+         {
+            return tokenMap.get(pattern);
+         }
+      }
+      return RexTokenType.NONE;
+   }
+
+}
+{% endhighlight %}
+</div>
+
+My addToken method adds a "^" to the beginning of each regular expression and a "$" because they mark the beginning and end of the string, respectfully. If I didn't have those, "a123" could still match as an INTEGER. I chose to create the Patterns and store them in the map instead of raw regex strings so that we don't have to compile the Pattern we try to match a string. My match function is fairly straightforward, just loop through every key (Pattern) in the map, and if that Pattern matches the given string, return the Token Type corresponding to that Pattern. If no pattern matches, return the NONE Token Type.
+
+### Adjusting our main function
+In the last chapter, we created a Scanner from either stdin or from a file. We're going to pass this to the Lexer so it can take input from that Scanner. We'll also start the Lexer by calling the Start function we will be implementing soon. So just add these two lines at the bottom of your main function:
+
+{% highlight Java %}
+lexer = new RexLexer(scanner);
+lexer.Start();
+{% endhighlight %}
+
+### Creating the Lexer
+
+So now the final part is using the Lexer Dict to actually create the Lexer. We've taken care of the hard part, the matching, so what we really need to do is just take in input, divide it into smaller strings to feed to the matcher, and collect all those tokens to later feed to the Parser. 
+
+So how are we going to divide the input into smaller strings? For now, we'll keep it simple and use the scanner's next method, dividing on whitespace. This will force us to write code with extreme amounts of whitespace like this: ( 4 + 5 ) * 10 but we will improve upon this soon.
+
+All you really need to do in the RexLexer class is the function Start and use the RexLexerDict and Scanner to generate a list of tokens that you can pass to the Parser (once we implement it). Some special cases to look out for:
+
+- If you get a NONE Token Type, you should just print an error message and exit
+
+- If you encounter an END Token Type, you should pass the current list of tokens to the Parser (just put in a comment for now), and clear the list.
+
+Try to implement that, and then we can compare notes:
+
+<b><a> Show Code </a></b>
+{: .showHide target="3"}
+
+<div class="targetDiv" id="div3">
+{% highlight java %}
+import java.util.Scanner;
+import java.util.ArrayList;
+
+public class RexLexer
+{
+   Scanner scanner;
+   RexParser parser;
+   RexLexerDict tokenDict;
+
+   public RexLexer(Scanner scanner, RexParser parser)
+   {
+      this.scanner = scanner;
+      this.parser = parser;
+      this.tokenDict = new RexLexerDict();
+   }
+
+   public void Start()
+   {
+      ArrayList<RexToken> curPhrase = new ArrayList<RexToken>();
+
+      while(scanner.hasNext())
+      {
+         String token = scanner.next();
+         RexTokenType tokenType = tokenDict.match(token);
+         if(tokenType == RexTokenType.NONE)
+         {
+            System.out.println("Syntax Error: " + token);
+            return;
+         }
+
+         if(tokenType == RexTokenType.END)
+         {
+            //Pass curPhrase to Parser
+            curPhrase = new ArrayList<RexToken>();
+         }
+         else
+         {
+            curPhrase.add(new RexToken(token, tokenType));
+         }
+      }
+   }
+}
+{% endhighlight %}
+</div>
+
+It's fairly straightforward, we advance through the scanner's input, calling the match function on each string we get. If it's not a NONE or END, we simply add it to our list. If it's END, we pass the list to the Parser, and clear it. If it's a NONE, we print out "Syntax Error" and stop the Lexer.
+
+That's all for this chapter! Next time we'll implement the Parser so we can actually get something working! As always, contact me for questions, comments, etc. at rex@bittersyntax.com
+
+#Next Chapter: (Not Posted Yet)
+
+[so-regex]:       http://stackoverflow.com/a/2759417
+[java-regex]:     http://docs.oracle.com/javase/tutorial/essential/regex/
+[java-pattern]:   http://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html
+[java-matcher]:   http://docs.oracle.com/javase/7/docs/api/java/util/regex/Matcher.html

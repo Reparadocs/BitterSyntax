@@ -11,8 +11,12 @@ Hi! Welcome to this blog/tutorial on creating a new interpreted language. This p
 By the end of this tutorial, you should hopefully end up with a fully functional interpreter in Java that can interpret our new programming language that I am naming Rex. You should also have enough information to go and implement any cool new features into Rex that you can think of.
 
 ### How the tutorial is structured
-The tutorial will be broken down into chapters. Each chapter will begin with a brief explanation of the problem we'll be tackling in the chapter. After that, we will dive in to some coding. I'll post a code snippet like this:
+The tutorial will be broken down into chapters. Each chapter will begin with an explanation of the problem we'll be tackling in the chapter. After that, you will be asked to code some sort of solution to the problem. For example, I might say design a Hello World program in Java and then I'll post a code snippet like this:
 
+<b><a> Show Code </a></b>
+{: .showHide target="1"}
+
+<div class="targetDiv" id="div1">
 {% highlight Java %}
 public class Tutorial
 {
@@ -22,8 +26,9 @@ public class Tutorial
    }
 }
 {% endhighlight %} 
+</div>
 
-And explain exactly what it's doing, what we're trying to accomplish, etc. I strongly encourage you attempt to "code along" instead of just using copy and paste, as that will definitely help you understand what's going on. Hopefully if you go through all the chapters in order and start with a basic knowledge of Java you should not feel lost at any point. However, if you do become lost (or have any other questions, comments, etc.) please e-mail me (rex@bittersyntax.com) and I'll do my best to help you out!
+**You should only look at the given code after you have devised your own solution** otherwise there is no way you're going to learn the content. If you just want to browse through my code, theres an [easier way to do that][github-rex]. After each code snippet, I'll explain some of the more complex parts of it. If you are asked to create a solution to a problem and are entirely clueless as to what you're being asked to do, that's probably my fault, please let me know and I will fix it. Hopefully if you go through all the chapters in order and start with a basic knowledge of Java you should not feel lost at any point. However, if you do become lost (or have any other questions, comments, etc.) please e-mail me (rex@bittersyntax.com) and I'll do my best to help you out!
 
 At the beginning of each chapter, there will also be a github link to the code that is up to date till the beginning of that chapter. In case you are curious, you can check out my current progress on Rex (the language we'll be creating) [here][github-rex]. 
 
@@ -56,4 +61,4 @@ I'm not some sort of wizard at programming. At the time of this writing, I'm sti
 [llvm]:        http://llvm.org/
 [jdk]:         http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
 [github-rex]:  https://github.com/Reparadocs/Rex
-[ch1]:         /rex/2015/02/15/rex/ch1
+[ch1]:         /rex/2015/02/14/rex-ch1.html
