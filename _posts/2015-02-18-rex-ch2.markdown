@@ -39,8 +39,14 @@ As you can see, Regex makes a lot of sense. If we encounter "123", Regex can mat
 
 ### Creating the Token Types
 
-But how do we actually put this in use? How can we map a regex string to a token type? We use a map! A map is made up of key, value pairs, and in this case it would be most logical to use the regex patterns as the key, and the token type as the value. There's only one problem: How do we represent the token type? We'll use an enum for that. So go ahead and create an enum called RexTokenType that includes all the token types we just covered and then compare it with mine:
+But how do we actually put this in use? How can we map a regex string to a token type? We use a map! A map is made up of key, value pairs, and in this case it would be most logical to use the regex patterns as the key, and the token type as the value. There's only one problem: How do we represent the token type? We'll use an enum for that. 
 
+<div class="box">
+   <u><b>Assignment</b></u>
+   <br/>
+   Go ahead and create an enum called RexTokenType that includes all the token types we just covered
+</div>
+<br/>
 <b><a> Show Code </a></b>
 {: .showHide target="1"}
 
@@ -66,7 +72,14 @@ Feel free to name your Token Types whatever you want, just keep in mind that my 
 
 ### Creating the Lexer Dictionary
 
-The next step is creating the map. We should to create another class, RexLexerDict, to hold this, and it will also handle our matching for us. All you need to do is create a map, add all the key-value pairs of regex patterns and Token Types. You should also add a function that takes in a String and returns a Token Type using that map! To help you with this, I suggest you take a look at [Java's regex support][java-regex], especially the [Pattern][java-pattern] and [Matcher][java-matcher] classes. Once you've created that class, you can take a look at what I did:
+The next step is creating the map. We should to create another class, RexLexerDict, to hold this, and it will also handle our matching for us. To help you with the following assignment, I suggest you take a look at [Java's regex support][java-regex], especially the [Pattern][java-pattern] and [Matcher][java-matcher] classes. 
+
+<div class="box">
+   <u><b>Assignment</b></u>
+   <br/>
+   Create a RexLexerDict class which holds our map of regex pattern - token type pairs for us. It should also contain a match function that takes a String and returns a Token Type using the aforementioned map.
+</div>
+<br/>
 
 <b><a> Show Code </a></b>
 {: .showHide target="2"}
@@ -125,7 +138,14 @@ My addToken method adds a "^" to the beginning of each regular expression and a 
 
 ### Passing Tokens
 
-So the next question is we know that we need to pass some data to the Parser, but what exactly is that data? If we just pass the string, there's no point of having the Lexer, and if we just pass the token type how will the Parser know an INTEGER is 123 or 456, etc.? The answer is we'll create a simple wrapper class to hold both the Token Type and the String, so that the Parser can use both pieces of information. So go ahead and write a RexToken class that does exactly that, and then you can compare with mine:
+So the next question is we know that we need to pass some data to the Parser, but what exactly is that data? If we just pass the string, there's no point of having the Lexer, and if we just pass the token type how will the Parser know an INTEGER is 123 or 456, etc.? The answer is we'll create a simple wrapper class to hold both the Token Type and the String, so that the Parser can use both pieces of information. 
+
+<div class="box">
+   <u><b>Assignment</b></u>
+   <br/>
+   Go ahead and create a wrapper class, RexToken, that will hold both a String and Token Type. Be sure to use proper encapsulation!
+</div>
+<br/>
 
 <b><a> Show Code </a></b>
 {: .showHide target="4"}
@@ -172,13 +192,19 @@ So now the final part is using the Lexer Dict to actually create the Lexer. We'v
 
 So how are we going to divide the input into smaller strings? For now, we'll keep it simple and use the scanner's next method, dividing on whitespace. This will force us to write code with extreme amounts of whitespace like this: ( 4 + 5 ) * 10 but we will improve upon this soon.
 
-All you really need to do in the RexLexer class is the function Start and use the RexLexerDict and Scanner to generate a list of tokens that you can pass to the Parser (once we implement it). Some special cases to look out for:
+Some special cases to look out for in the following assignment:
 
 - If you get a NONE Token Type, you should just print an error message and exit
 
 - If you encounter an END Token Type, you should pass the current list of tokens to the Parser (just put in a comment for now), and clear the list.
 
-Try to implement that, and then we can compare notes:
+<div class="box">
+   <u><b>Assignment</b></u>
+   <br/>
+   Create the RexLexer class. It should have a Start function which uses a RexLexerDict and the Scanner that it was constructed with to generate a list of RexTokens that you can then pass to the Parser once we implement it. 
+
+</div>
+<br/>
 
 <b><a> Show Code </a></b>
 {: .showHide target="3"}

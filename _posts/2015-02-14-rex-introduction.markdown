@@ -11,7 +11,16 @@ Hi! Welcome to this blog/tutorial on creating a new interpreted language. This p
 By the end of this tutorial, you should hopefully end up with a fully functional interpreter in Java that can interpret our new programming language that I am naming Rex. You should also have enough information to go and implement any cool new features into Rex that you can think of.
 
 ### How the tutorial is structured
-The tutorial will be broken down into chapters. Each chapter will begin with an explanation of the problem we'll be tackling in the chapter. After that, you will be asked to code some sort of solution to the problem. For example, I might say design a Hello World program in Java and then I'll post a code snippet like this:
+The tutorial will be broken down into chapters. Each chapter will begin with an explanation of the problem we'll be tackling in the chapter. After that, you will be asked to code some sort of solution to the problem. For example:
+
+<div class="box">
+   <u><b>Assignment</b></u>
+   <br/>
+   Create a Hello World program in Java
+</div>
+<br/>
+
+Below that, you can see how my code compares. You should look at this after you code your solution as it's possible you may have missed a crucial part of the program.
 
 <b><a> Show Code </a></b>
 {: .showHide target="1"}
