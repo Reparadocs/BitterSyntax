@@ -123,6 +123,41 @@ public class RexLexerDict
 
 My addToken method adds a "^" to the beginning of each regular expression and a "$" because they mark the beginning and end of the string, respectfully. If I didn't have those, "a123" could still match as an INTEGER. I chose to create the Patterns and store them in the map instead of raw regex strings so that we don't have to compile the Pattern we try to match a string. My match function is fairly straightforward, just loop through every key (Pattern) in the map, and if that Pattern matches the given string, return the Token Type corresponding to that Pattern. If no pattern matches, return the NONE Token Type.
 
+### Passing Tokens
+
+So the next question is we know that we need to pass some data to the Parser, but what exactly is that data? If we just pass the string, there's no point of having the Lexer, and if we just pass the token type how will the Parser know an INTEGER is 123 or 456, etc.? The answer is we'll create a simple wrapper class to hold both the Token Type and the String, so that the Parser can use both pieces of information. So go ahead and write a RexToken class that does exactly that, and then you can compare with mine:
+
+<b><a> Show Code </a></b>
+{: .showHide target="4"}
+
+<div class="targetDiv" id="div4">
+{% highlight java %}
+public class RexToken
+{
+   private String data;
+   private RexTokenType type;
+
+   public RexToken(String data, RexTokenType type)
+   {
+      this.data = data;
+      this.type = type;
+   }
+
+   public String getData()
+   {
+      return data;
+   }
+
+   public RexTokenType getType()
+   {
+      return type;
+   }
+}
+{% endhighlight %}
+</div>
+
+This should all be fairly standard, the main methods are just get functions so that we can use proper encapsulation techniques.
+
 ### Adjusting our main function
 In the last chapter, we created a Scanner from either stdin or from a file. We're going to pass this to the Lexer so it can take input from that Scanner. We'll also start the Lexer by calling the Start function we will be implementing soon. So just add these two lines at the bottom of your main function:
 
@@ -195,7 +230,7 @@ public class RexLexer
 {% endhighlight %}
 </div>
 
-It's fairly straightforward, we advance through the scanner's input, calling the match function on each string we get. If it's not a NONE or END, we simply add it to our list. If it's END, we pass the list to the Parser, and clear it. If it's a NONE, we print out "Syntax Error" and stop the Lexer.
+It's fairly straightforward, we advance through the scanner's input, calling the match function on each string we get. If it's not a NONE or END, we simply add a RexToken with that TokenType and String to our list. If it's END, we pass the list to the Parser, and clear it. If it's a NONE, we print out "Syntax Error" and stop the Lexer.
 
 That's all for this chapter! Next time we'll implement the Parser so we can actually get something working! As always, contact me for questions, comments, etc. at rex@bittersyntax.com
 
